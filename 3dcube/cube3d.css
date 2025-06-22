@@ -1,0 +1,96 @@
+body {
+    display: flex;
+    /* 가로 중앙 정렬 */
+    justify-content: center;
+    /* 세로 중앙 정렬 */
+    align-items: center;
+    /* body가 뷰포트 전체 높이를 차지하도록 함 */
+    min-height: 100vh;
+    /* body의 기본 마진 제거 */
+    margin: 0;
+    /* 배경색을 추가하여 가시성 향상 */
+    background-color: #f0f0f0;
+    /* BEGIN: 스크롤바 제거 */
+    overflow: hidden; /* 스크롤바를 숨김 */
+    /* END: 스크롤바 제거 */
+}
+
+.container {
+    width: 30vw;
+    height: 30vw;
+    perspective: 800px;
+    /* CSS 변수로 큐브 크기 정의 */
+    --cube-size: 30vw; /* 또는 calc(100% * 0.5) 등으로 유동적으로 설정 */
+}
+
+.cube {
+    width: 100%; /* .container의 100% */
+    height: 100%; /* .container의 100% */
+    transform-style: preserve-3d;
+    animation: rotate 5s infinite linear;
+}
+
+.face {
+    position: absolute;
+    width: 100%; /* .cube의 100% */
+    height: 100%; /* .cube의 100% */
+    background-color: transparent;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 4vw; /* 뷰포트 너비에 따라 폰트 크기 조절 */
+    /* BEGIN: 중앙 정렬 추가 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* END: 중앙 정렬 추가 */
+    color: white;
+    /* transition: all 0.3s ease; (옵션: 크기 변경 시 부드러운 전환 효과) */
+}
+
+.face img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain; /* 이미지 비율 유지하며 영역에 맞춤 */
+    display: block;
+    margin: 0 auto;
+    pointer-events: none; /* 드래그 방지, 필요시 제거 */
+    user-select: none;    /* 선택 방지, 필요시 제거   */
+}
+
+.front {
+    transform: translateZ(calc(var(--cube-size) / 2)); /* 큐브 크기의 절반 */
+}
+
+.back {
+    transform: rotateY(180deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+.left {
+    transform: rotateY(-90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+.right {
+    transform: rotateY(90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+.top {
+    transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+.bottom {
+    transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2));
+}
+@keyframes rotate {
+    from {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(360deg) rotateY(360deg);
+    }
+}
+
+.cube:active,
+.cube.paused {
+    animation-play-state: paused;
+}
